@@ -8,29 +8,28 @@ public class Player : MonoBehaviour
 	[SerializeField] Rigidbody2D rigidbody;
 	[Header("Attributes")]
 	[SerializeField] float speed = 5f;
-    // Start is called before the first frame update
-    void Start()
-    {
-		if (rigidbody == null)
-		{
-			rigidbody = GetComponent<Rigidbody2D>();
-		}
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-		Vector2 direction;
-		direction = Vector2.zero;
-		direction.x = Input.GetAxis("Horizontal");
-		direction.y = Input.GetAxis("Vertical");
-		if (direction.magnitude > 0.1f)
-		{
-			rigidbody.velocity = direction.normalized * speed * Time.deltaTime;
-		}
-		else
-		{
-			rigidbody.velocity = Vector2.zero;
-		}
+	Vector2 movement;
+	public Camera cam;
+	Vector2 mousePos;
+
+	// Update is called once per frame
+	void Update()
+	{
+		movement.x = Input.GetAxisRaw("Horizontal");
+		movement.y = Input.GetAxisRaw("Vertical");
+
+		cam.ScreenToWorldPoint(Input.mousePosition);
+		mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
 	}
+
+	void FixedUpdate()
+	{
+		rigidbody.MovePosition(rigidbody.position + movement * speed * Time.fixedDeltaTime);
+		Vector2 lookDir = mousePos - rigidbody.position;
+		float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90;
+		rigidbody.rotation = angle;
+
+	}
+
 }

@@ -358,7 +358,7 @@ MonoBehaviour:
   tileDataList:
   - {fileID: 11400000, guid: cdcc982a3313d1e4ba3fe814d7f7daf6, type: 2}
   - {fileID: 11400000, guid: d2fbd17911f4fbb4f82fd1eb427a38b5, type: 2}
-  timer: 60
+  originalTimer: 60
 --- !u!4 &238326614
 Transform:
   m_ObjectHideFlags: 0
@@ -2654,7 +2654,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &624466772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2667,6 +2667,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6354a3cc6a069f408fe8476bd3fc2e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidbody: {fileID: 624466771}
+  speed: 5
+  cam: {fileID: 519420031}
 --- !u!4 &624466773
 Transform:
   m_ObjectHideFlags: 0
