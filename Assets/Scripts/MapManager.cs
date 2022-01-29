@@ -5,9 +5,9 @@ using UnityEngine.Tilemaps;
 
 public class MapManager : MonoBehaviour
 {
-	[SerializeField] Tilemap map;
-	[SerializeField] List<TileData> tileDataList;
-	Dictionary<TileBase, TileData> dataFromTiles;
+	public Tilemap map;
+	public List<TileData> tileDataList;
+	public Dictionary<TileBase, TileData> dataFromTiles;
 
 	private void Awake()
 	{
@@ -32,10 +32,26 @@ public class MapManager : MonoBehaviour
 			TileBase clickedTile = map.GetTile(gridPosition);
 
 			float duration = dataFromTiles[clickedTile].duration;
-			float flammability = dataFromTiles[clickedTile].flammability;
+			float hp = dataFromTiles[clickedTile].hp;
 			TileStatus tileStatus = dataFromTiles[clickedTile].tileStatus;
 
-			Debug.Log("tiledata at " + gridPosition + " flammability: " + flammability + " duration: " + duration + " tileStatus: " + tileStatus);
+			Debug.Log("starting tiledata at " + gridPosition + " flammability: " + hp + " duration: " + duration + " tileStatus: " + tileStatus);
+			Debug.Log("Current hp at tile: " + GameManager.Instance.burnManager.GetHitpoints(gridPosition));
+		}
+		if (Input.GetMouseButtonDown(1))
+		{
+			Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+			Vector3Int gridPosition = map.WorldToCell(mousePosition);
+
+			TileBase clickedTile = map.GetTile(gridPosition);
+
+			float duration = dataFromTiles[clickedTile].duration;
+			float hp = dataFromTiles[clickedTile].hp;
+			TileStatus tileStatus = dataFromTiles[clickedTile].tileStatus;
+
+			GameManager.Instance.burnManager.ChangeHitpoints(gridPosition, -1);
+			GameManager.Instance.burnManager.VisualizeBurn();
+			Debug.Log("Current hp at tile: " + GameManager.Instance.burnManager.GetHitpoints(gridPosition));
 		}
 	}
 }

@@ -16,6 +16,6 @@ public class TileData : ScriptableObject
 	public TileBase[] tiles;
 
 	public float duration;
-	public float flammability;
+	public float hp;
 	public TileStatus tileStatus;
 }

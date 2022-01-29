@@ -15,5 +15,5 @@ MonoBehaviour:
   tiles:
   - {fileID: 11400000, guid: c8ccb4c7f63879741a38eac615c14455, type: 2}
   duration: 1
-  flammability: 9999999
+  hp: 9999999
   tileStatus: 0
