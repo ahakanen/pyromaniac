@@ -24,13 +24,6 @@ public class Player : MonoBehaviour
 		direction = Vector2.zero;
 		direction.x = Input.GetAxis("Horizontal");
 		direction.y = Input.GetAxis("Vertical");
-		if (direction.magnitude > 0.1f)
-		{
-			rigidbody.velocity = direction.normalized * speed * Time.deltaTime;
-		}
-		else
-		{
-			rigidbody.velocity = Vector2.zero;
-		}
+		rigidbody.velocity = direction.normalized * speed * Time.deltaTime;
 	}
 }
