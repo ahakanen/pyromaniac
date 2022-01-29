@@ -8,6 +8,8 @@ public class MapManager : MonoBehaviour
 	public Tilemap map;
 	public List<TileData> tileDataList;
 	public Dictionary<TileBase, TileData> dataFromTiles;
+	[SerializeField] float originalTimer = 60f;
+	float timer;
 
 	private void Awake()
 	{
@@ -20,6 +22,7 @@ public class MapManager : MonoBehaviour
 				dataFromTiles.Add(tile, tileData);
 			}
 		}
+		timer = originalTimer;
 	}
 
 	private void Update()
@@ -37,6 +40,8 @@ public class MapManager : MonoBehaviour
 
 			Debug.Log("starting tiledata at " + gridPosition + " flammability: " + hp + " duration: " + duration + " tileStatus: " + tileStatus);
 			Debug.Log("Current hp at tile: " + GameManager.Instance.burnManager.GetHitpoints(gridPosition));
+			Debug.Log("Current duration at tile: " + GameManager.Instance.burnManager.GetBurnTimer(gridPosition));
+			Debug.Log("Current status at tile: " + GameManager.Instance.burnManager.GetTileStatus(gridPosition));
 		}
 		if (Input.GetMouseButtonDown(1))
 		{
@@ -52,6 +57,16 @@ public class MapManager : MonoBehaviour
 			GameManager.Instance.burnManager.ChangeHitpoints(gridPosition, -1);
 			GameManager.Instance.burnManager.VisualizeBurn();
 			Debug.Log("Current hp at tile: " + GameManager.Instance.burnManager.GetHitpoints(gridPosition));
+			Debug.Log("Current duration at tile: " + GameManager.Instance.burnManager.GetBurnTimer(gridPosition));
+			Debug.Log("Current status at tile: " + GameManager.Instance.burnManager.GetTileStatus(gridPosition));
+		}
+		// timer to deal with burn timers
+		timer--;
+		if (timer < 0)
+		{
+			GameManager.Instance.burnManager.UpdateBurnDurations();
+			timer = originalTimer;
+			GameManager.Instance.burnManager.VisualizeBurn();
 		}
 	}
 }
