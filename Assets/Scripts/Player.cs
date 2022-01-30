@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 {
 	[Header("References")]
 	[SerializeField] Rigidbody2D rigidbody;
+	[SerializeField] ParticleSystem flamethrower;
 	[Header("Attributes")]
 	[SerializeField] float speed = 5f;
     // Start is called before the first frame update
@@ -24,13 +25,15 @@ public class Player : MonoBehaviour
 		direction = Vector2.zero;
 		direction.x = Input.GetAxis("Horizontal");
 		direction.y = Input.GetAxis("Vertical");
-		if (direction.magnitude > 0.1f)
+		rigidbody.velocity = direction.normalized * speed * Time.deltaTime;
+		// fire flamethrower
+		if (Input.GetMouseButtonDown(0))
 		{
-			rigidbody.velocity = direction.normalized * speed * Time.deltaTime;
+			flamethrower.Play();
 		}
-		else
+		else if (Input.GetMouseButtonUp(0))
 		{
-			rigidbody.velocity = Vector2.zero;
+			flamethrower.Stop();
 		}
 	}
 }
